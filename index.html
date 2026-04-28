@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mp4 to mp3</title>
+    <script src="./ffmpeg/ffmpeg.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <input type="file" id="fileInput" accept=".mp4" />
+        <br />
+        <p id="status"></p>
+    </div>
+
+    <script>
+        const { FFmpeg } = FFmpegWASM;
+        const ffmpeg = new FFmpeg({
+            classWorkerURL: './ffmpeg/814.ffmpeg.js'
+        });
+
+        const fileInput = document.getElementById('fileInput');
+        const statusText = document.getElementById('status');
+
+        fileInput.addEventListener("change", () => {
+            if (fileInput.files.length === 1) {
+                convertToMP3(fileInput.files[0]);
+            }
+        });
+
+        function fileToArray(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsArrayBuffer(file);
+            });
+        }
+
+        async function convertToMP3(file) {
+            statusText.textContent = "running (no errors so far).";
+
+            try {
+                if (!ffmpeg.loaded) {
+                    await ffmpeg.load();
+                }
+
+                const fileData = await fileToArray(file);
+
+                await ffmpeg.writeFile('input.mp4', new Uint8Array(fileData));
+
+                await ffmpeg.exec(['-i', 'input.mp4', '-vn', '-acodec', 'libmp3lame', '-ar', '44100', '-ac', '2', 'output.mp3']);
+
+                const mp3Data = await ffmpeg.readFile('output.mp3');
+
+                const mp3Blob = new Blob([mp3Data.buffer], { type: 'audio/mp3' });
+
+                const mp3Url = URL.createObjectURL(mp3Blob);
+                const a = document.createElement('a');
+                a.href = mp3Url;
+                a.download = 'extracted-audio.mp3';
+                a.textContent = 'Download MP3';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+
+                statusText.textContent = "done.";
+            } catch (error) {
+                statusText.textContent = "error. check console.";
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+
+</html>
