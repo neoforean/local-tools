@@ -11,7 +11,7 @@
 
 <body>
     <div id="container">
-        <label class="drop-zone">
+        <label id="drop-zone">
             <input type="file" id="fileInput" accept="video/*,.mkv,.webm,.mov,.avi" />
 
             <div class="drop-content">
@@ -49,16 +49,39 @@
         const statusBar = document.getElementById('statusBar');
         const icon = document.querySelector('.icon');
         const container = document.getElementById("container");
+        const dropZone = document.getElementById("drop-zone");
 
         const setLoading = (state) => {
             statusBar.classList.toggle('active', state);
             icon.style.visibility = state ? 'hidden' : 'visible';
             container.style.pointerEvents = state ? 'none' : 'all';
+            dropZone.classList = state ? "collapsed" : "";
         };
 
         fileInput.addEventListener('change', () => {
+            progressFill.style.width = `0`;
             const file = fileInput.files?.[0];
             if (file) convert(file);
+        });
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragging');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragging');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragging');
+
+            const file = e.dataTransfer.files?.[0];
+            if (file) {
+                fileInput.files = e.dataTransfer.files;
+                convert(file);
+            }
         });
 
         const fileToArray = (file) =>
