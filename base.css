@@ -7,12 +7,77 @@
 body {
     width: 100vw;
     height: 100vh;
-    display: flex;
-    align-content: center;
     justify-content: center;
-    align-items: center;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
+    user-select: none;
+}
+
+header {
+    width: 100%;
+    padding: 24px 32px;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+
+#status{
+    height: 0;
+    visibility: collapse;
+    font-size: 0;
+}
+
+#status.active{
+    height: 16px;
+    visibility: visible;
+    font-size: 16px;
+}
+
+header a{
+    cursor: pointer;
+}
+
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 96px);
+    animation: 0.5s ease-out fadein forwards;
+}
+
+.wordmark {
+    font-size: 14.5px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: #111;
+    text-decoration: none;
+    text-transform: lowercase;
+    transform: translateX(-19px);
+}
+
+.wordmark::before {
+    content: '';
+    position: absolute;
+    display: inline-block;
+    background-image: url('assets/arrow.svg');
+    width: 22px;
+    height: 22px;
+    background-size: cover;
+    transform: translate(-25px, -3px);
+    transition: transform 0.7s cubic-bezier(0.075, 0.82, 0.165, 1); 
+}
+
+.wordmark:hover::before {
+    transform: translate(-27px, -3px);
+}
+
+.wordmark:hover {
+    opacity: 0.7;
+}
+
+.wordmark:active {
+    opacity: 0.4;
 }
 
 #tools {
@@ -60,7 +125,7 @@ body {
 #drop-zone {
     width: 320px;
     height: 180px;
-    border: 1px dashed #888;
+    border: 1px solid #c9c9c9;
     border-radius: 16px;
     display: flex;
     align-items: center;
@@ -71,7 +136,7 @@ body {
     text-align: center;
 }
 
-#drop-zone.collapsed{
+#drop-zone.collapsed {
     height: 10px;
     border-color: transparent;
 }
@@ -81,12 +146,12 @@ body {
     background: rgba(0, 0, 0, 0.1);
 }
 
-#drop-zone > .drop-content > .icon {
+#drop-zone>.drop-content>.icon {
     transition: transform 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 
-#drop-zone.collapsed > .drop-content > .icon {
+#drop-zone.collapsed>.drop-content>.icon {
     transform: scale(0.5);
 }
 
@@ -144,10 +209,30 @@ body {
     height: 100%;
     width: 0%;
     background: #333;
+    animation: 2.5s ease-in-out pulsebg infinite;
 }
 
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
+@keyframes fadein {
+    0%
+    {
+        opacity: 0;
+    }
+    100%
+    {
+        opacity: 1;
+    }
+}
+
+@keyframes pulsebg {
+    0%
+    {
+        opacity: 1;
+    }
+    50%
+    {
+        opacity: 0.3;
+    }
+    100%{
+        opacity: 1;
     }
 }
