@@ -57,7 +57,7 @@ body {
     line-height: 24px;
 }
 
-.drop-zone {
+#drop-zone {
     width: 320px;
     height: 180px;
     border: 1px dashed #888;
@@ -71,11 +71,30 @@ body {
     text-align: center;
 }
 
-.drop-zone:hover {
+#drop-zone.collapsed{
+    height: 10px;
+    border-color: transparent;
+}
+
+#drop-zone.dragging {
+    border-color: #000000;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+#drop-zone > .drop-content > .icon {
+    transition: transform 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+
+#drop-zone.collapsed > .drop-content > .icon {
+    transform: scale(0.5);
+}
+
+#drop-zone:hover {
     filter: contrast(0.2) brightness(1.1);
 }
 
-.drop-zone input[type="file"] {
+#drop-zone input[type="file"] {
     display: none;
 }
 
@@ -96,7 +115,7 @@ body {
     background-position: center;
 }
 
-.drop-zone.dragover {
+#drop-zone.dragover {
     border-color: #2b7cff;
     background: #eaf3ff;
 }
