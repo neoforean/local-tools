@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>audio extractor</title>
-    <script src="./ffmpeg/ffmpeg.js"></script>
+    <script src="../ffmpeg/ffmpeg.js"></script>
     <link rel="stylesheet" href="../base.css">
 </head>
 
@@ -31,7 +31,7 @@
         const { FFmpeg } = FFmpegWASM;
 
         const ffmpeg = new FFmpeg({
-            classWorkerURL: './ffmpeg/814.ffmpeg.js'
+            classWorkerURL: '../ffmpeg/814.ffmpeg.js'
         });
 
         const progressFill = document.getElementById('progressFill');
