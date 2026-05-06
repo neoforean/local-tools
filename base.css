@@ -1,0 +1,134 @@
+* {
+    font-family: sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+#tools {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+#tools>div {
+    border-radius: 16px;
+    border: 1px solid rgb(234, 234, 234);
+    width: 224px;
+    height: 128px;
+    display: flex;
+    align-items: flex-end;
+    padding: 12px;
+    user-select: none;
+    transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    cursor: pointer;
+}
+
+#tools>div:hover {
+    background-color: rgb(248, 248, 248);
+    border: 1px solid rgb(128, 128, 128);
+}
+
+#tools>div:active {
+    transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    transform: scale(0.97)
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+#container p {
+    color: gray;
+    line-height: 24px;
+}
+
+.drop-zone {
+    width: 320px;
+    height: 180px;
+    border: 1px dashed #888;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    text-align: center;
+}
+
+.drop-zone:hover {
+    filter: contrast(0.2) brightness(1.1);
+}
+
+.drop-zone input[type="file"] {
+    display: none;
+}
+
+.drop-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #555;
+    font-size: 14px;
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto;
+    background-image: url("assets/folder.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.drop-zone.dragover {
+    border-color: #2b7cff;
+    background: #eaf3ff;
+}
+
+.status-bar {
+    display: none;
+    position: absolute;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+
+.status-bar.active {
+    display: flex;
+}
+
+.progress {
+    width: 70%;
+    height: 6px;
+    background: #eee;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+#progressFill {
+    height: 100%;
+    width: 0%;
+    background: #333;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
