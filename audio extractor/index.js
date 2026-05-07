@@ -6,20 +6,21 @@ const allowedExtensions = ['.mp4', '.mkv', '.webm', '.mov', '.avi'];
 const detailsP = document.getElementById("details");
 const statusP = document.getElementById("status");
 
-if (
-    typeof WebAssembly === 'undefined' ||
-    typeof Worker === 'undefined'
-) {
-    dropZone.style.display = 'none';
-    detailsP.innerHTML = "browser not supported<br>(WebAssembly or Worker support missing)";
-    statusP.className = "not-supported";
-}
-
 const { FFmpeg } = FFmpegWASM;
 
 const ffmpeg = new FFmpeg({
     classWorkerURL: '../ffmpeg/814.ffmpeg.js'
 });
+
+const isSupported = supportsWasmFFmpeg();
+console.log(`isSupported: ${isSupported}`);
+if (!isSupported)
+{
+    dropZone.style.display = 'none';
+    detailsP.innerHTML = "browser not supported<br>(WebAssembly or Worker support missing)";
+    statusP.className = "not-supported";
+    throw "browser not supported (WebAssembly or Worker support missing)";
+}
 
 const progressFill = document.getElementById('progressFill');
 
