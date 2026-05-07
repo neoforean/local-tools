@@ -4,6 +4,7 @@ const toolHolderDiv = document.querySelector('#tool-holder > div');
 const titlebarLabel = document.querySelector('.titlebar > p');
 
 document.querySelectorAll("#tools > div").forEach(element => {
+    
     element.onclick = () => {
         toolFrame.src = document.location + element.textContent + "/" + "index.html";
         titlebarLabel.textContent = element.textContent;

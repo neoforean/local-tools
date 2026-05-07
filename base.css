@@ -237,6 +237,14 @@ main {
     animation: 2.5s ease-in-out pulsebg infinite;
 }
 
+.not-supported{
+    width: 32px;
+    height: 32px !important;
+    visibility: visible !important;
+    background-size: contain;
+    background-image: url('assets/block.svg');
+}
+
 @keyframes fadein {
     0% {
         opacity: 0;

@@ -1,3 +1,20 @@
+const fileInput = document.getElementById('fileInput');
+const icon = document.querySelector('.icon');
+const container = document.getElementById("container");
+const dropZone = document.getElementById("drop-zone");
+const allowedExtensions = ['.mp4', '.mkv', '.webm', '.mov', '.avi'];
+const detailsP = document.getElementById("details");
+const statusP = document.getElementById("status");
+
+if (
+    typeof WebAssembly === 'undefined' ||
+    typeof Worker === 'undefined'
+) {
+    dropZone.style.display = 'none';
+    detailsP.innerHTML = "browser not supported<br>(WebAssembly or Worker support missing)";
+    statusP.className = "not-supported";
+}
+
 const { FFmpeg } = FFmpegWASM;
 
 const ffmpeg = new FFmpeg({
@@ -16,15 +33,6 @@ ffmpeg.on('progress', ({ progress }) => {
 ffmpeg.on('log', ({ message }) => {
     console.log(message);
 });
-
-const fileInput = document.getElementById('fileInput');
-const statusBar = document.getElementById('statusBar');
-const icon = document.querySelector('.icon');
-const container = document.getElementById("container");
-const dropZone = document.getElementById("drop-zone");
-const allowedExtensions = ['.mp4', '.mkv', '.webm', '.mov', '.avi'];
-const detailsP = document.getElementById("details");
-const statusP = document.getElementById("status");
 
 const setLoading = (isBusy) => {
     statusBar.classList.toggle('active', isBusy);
