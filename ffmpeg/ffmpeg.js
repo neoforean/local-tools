@@ -1,40 +1,90 @@
-function supportsWasmFFmpeg() {
+async function supportsWasmFFmpeg() {
     if (
         typeof WebAssembly !== 'object' ||
         typeof Worker !== 'function' ||
-        typeof Promise !== 'function'
+        typeof Promise !== 'function' ||
+        typeof Blob !== 'function' ||
+        typeof URL !== 'function'
     ) {
         return false;
     }
 
     try {
-    const wasmBytes = new Uint8Array([
-        0x00, 0x61, 0x73, 0x6d,
-        0x01, 0x00, 0x00, 0x00
-    ]);
+        const wasmBytes = new Uint8Array([
+            0x00, 0x61, 0x73, 0x6d,
+            0x01, 0x00, 0x00, 0x00
+        ]);
 
-    if (!WebAssembly.validate(wasmBytes)) {
-        return false;
-    }
+        if (!WebAssembly.validate(wasmBytes)) {
+            return false;
+        }
     } catch {
         return false;
     }
 
     try {
+        const mod = await WebAssembly.instantiate(
+            new Uint8Array([
+                0x00, 0x61, 0x73, 0x6d,
+                0x01, 0x00, 0x00, 0x00
+            ])
+        );
+
+        if (!mod || !mod.instance) return false;
+    } catch {
+        return false;
+    }
+
+    if (typeof fetch === 'function' && typeof WebAssembly.instantiateStreaming === 'function') {
+        try {
+            const response = new Response(
+                new Uint8Array([
+                    0x00, 0x61, 0x73, 0x6d,
+                    0x01, 0x00, 0x00, 0x00
+                ])
+            );
+
+            await WebAssembly.instantiateStreaming(response);
+        } catch {}
+    }
+
+    try {
         const blob = new Blob(
-            ['self.close()'],
-            { type: 'text/javascript' }
+            [
+                `
+                self.onmessage = (e) => {
+                    self.postMessage(e.data);
+                };
+                `
+            ],
+            { type: 'application/javascript' }
         );
 
         const url = URL.createObjectURL(blob);
-
         const worker = new Worker(url);
 
-        worker.terminate();
+        const ok = await new Promise((resolve) => {
+            const timeout = setTimeout(() => {
+                resolve(false);
+            }, 1000);
 
+            worker.onmessage = () => {
+                clearTimeout(timeout);
+                resolve(true);
+            };
+
+            try {
+                worker.postMessage('ping');
+            } catch {
+                clearTimeout(timeout);
+                resolve(false);
+            }
+        });
+
+        worker.terminate();
         URL.revokeObjectURL(url);
 
-        return true;
+        if (!ok) return false;
     } catch {
         return false;
     }
