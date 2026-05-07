@@ -6,7 +6,7 @@ const titlebarLabel = document.querySelector('.titlebar > p');
 document.querySelectorAll("#tools > div").forEach(element => {
     
     element.onclick = () => {
-        toolFrame.src = document.location + element.textContent + "/" + "index.html";
+        toolFrame.src = (document.location.href.includes("index.html") ? document.location.href.substring(0, document.location.href.length - "index.html".length) : document.location) + element.textContent + "/" + "index.html";
         titlebarLabel.textContent = element.textContent;
         toolHolderDiv.classList.add('popin');
         toolHolder.style.visibility = 'visible';
