@@ -15,6 +15,7 @@ body {
 }
 
 #tool-holder {
+    background-color: rgba(255, 255, 255, 0.5);
     width: 100vw;
     height: 100vh;
     position: absolute;
@@ -28,8 +29,8 @@ body {
 
 #tool-holder>div {
     background-color: white;
-    width: calc(100vw - 64px);
-    height: calc(100vh - 64px);
+    width: min(calc(100vw - 64px), 520px);
+    height: min(calc(100vh - 64px), 620px);
     border: 1px solid rgb(192, 192, 192);
     border-radius: 16px;
     box-shadow: 0 0 12px 12px rgb(234, 234, 234);
@@ -47,7 +48,7 @@ body {
     }
 }
 
-.popin{
+.popin {
     animation: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1) popin forwards;
 }
 
@@ -60,7 +61,11 @@ body {
 #tool-holder>div>.titlebar {
     height: 48px;
     display: flex;
-    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+.titlebar>p {
+    margin-left: 16px;
 }
 
 .titlebar>button {

@@ -10,7 +10,7 @@ ffmpeg.on('progress', ({ progress }) => {
     // 0-1 to 0-100
     progress = progress * 100;
     progressFill.style.width = `${progress}%`;
-    statusP.textContent =  `${Math.round(progress)}%`;
+    statusP.textContent = `${Math.round(progress)}%`;
 });
 
 ffmpeg.on('log', ({ message }) => {
@@ -31,7 +31,7 @@ const setLoading = (isBusy) => {
     icon.style.visibility = isBusy ? 'hidden' : 'visible';
     container.style.pointerEvents = isBusy ? 'none' : 'all';
     dropZone.classList = isBusy ? "collapsed" : "";
-    detailsP.style.visibility = isBusy ? "collapse" : "visible"; 
+    detailsP.style.visibility = isBusy ? "collapse" : "visible";
     statusP.classList = isBusy ? "active" : "";
 };
 
