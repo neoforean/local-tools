@@ -1,5 +1,4 @@
-async function Main()
-{
+async function Main() {
     const fileInput = document.getElementById('fileInput');
     const icon = document.querySelector('.icon');
     const container = document.getElementById("container");
@@ -37,7 +36,6 @@ async function Main()
     });
 
     const setLoading = (isBusy) => {
-        statusBar.classList.toggle('active', isBusy);
         icon.style.visibility = isBusy ? 'hidden' : 'visible';
         container.style.pointerEvents = isBusy ? 'none' : 'all';
         dropZone.classList = isBusy ? "collapsed" : "";

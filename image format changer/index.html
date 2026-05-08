@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>image format changer</title>
+    <link rel="stylesheet" href="../base.css">
+    <script src="../jszip/jszip.js"></script>
+    <script src="../browser-image-compression/browser-image-compression.js"></script>
+</head>
+
+<body>
+    <main>
+        <div id="container">
+            <div class="custom-select" style="width:200px;">
+                <p>Convert to:</p>
+
+                <select>
+                    <option value="0">.png</option>
+                    <option value="1">.png</option>
+                    <option value="2">.jpg</option>
+                    <option value="3">.webp</option>
+                </select>
+            </div>
+
+            <label id="drop-zone">
+                <input type="file" id="fileInput" accept="image/*,.png,.jpg,.jpeg,.webp,.svg" multiple />
+
+                <div class="drop-content">
+                    <div class="icon"></div>
+                </div>
+
+                <div id="statusBar" class="status-bar">
+                    <div class="progress">
+                        <div id="progressFill"></div>
+                    </div>
+                </div>
+            </label>
+
+            <p id="status">0%</p>
+            <p id="details">PNG, JPG, JPEG, WEBP, SVG<br>conversion is local<br><a style="color: #ff0037;">conversion is lossy!</a></p>
+        </div>
+    </main>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
