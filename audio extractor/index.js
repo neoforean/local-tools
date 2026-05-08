@@ -6,6 +6,7 @@ async function Main() {
     const allowedExtensions = ['.mp4', '.mkv', '.webm', '.mov', '.avi'];
     const detailsP = document.getElementById("details");
     const statusP = document.getElementById("status");
+    const statusBar = document.getElementById("statusBar");
 
     const { FFmpeg } = FFmpegWASM;
 
@@ -36,6 +37,7 @@ async function Main() {
     });
 
     const setLoading = (isBusy) => {
+        statusBar.classList.toggle('active', isBusy);
         icon.style.visibility = isBusy ? 'hidden' : 'visible';
         container.style.pointerEvents = isBusy ? 'none' : 'all';
         dropZone.classList = isBusy ? "collapsed" : "";

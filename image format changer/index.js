@@ -7,6 +7,7 @@ async function Main() {
     const statusP = document.getElementById("status");
     const progressFill = document.getElementById("progressFill");
     const select = document.querySelector("select");
+    const statusBar = document.getElementById("statusBar");
 
     const formats = {
         "0": { mime: "image/png", ext: "png" },
@@ -34,6 +35,7 @@ async function Main() {
     }
 
     function setLoading(isBusy) {
+        statusBar.classList.toggle('active', isBusy);
         icon.style.visibility = isBusy ? "hidden" : "visible";
         container.style.pointerEvents = isBusy ? "none" : "all";
         dropZone.className = isBusy ? "collapsed" : "";
